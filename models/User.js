@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
-const thoughtsSchema = require('./Thoughts');
+const thoughtSchema = require('./Thought');
 
-// Schema to create Student model
+// Schema to create User model
 const userSchema = new Schema(
   {
     username: {
@@ -18,7 +18,7 @@ const userSchema = new Schema(
       match: /.+\@.+\..+/,
       dropDups: true
     },
-    thoughts: [thoughtsSchmea],
+    thoughts: [thoughtSchmea],
     friends: [this]
     },
     {
