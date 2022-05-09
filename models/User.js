@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const thoughtSchema = require('./Thought');
+const Thought = require('./Thought');
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -18,8 +18,8 @@ const userSchema = new Schema(
       match: /.+\@.+\..+/,
       dropDups: true
     },
-    thoughts: [thoughtSchmea],
-    friends: [this]
+    thoughts: {type: Array, ref: 'thought'},
+    friends: {type: Array, ref: 'user'}
     },
     {
     toJSON: {
@@ -28,6 +28,15 @@ const userSchema = new Schema(
   }
 );
 
-const User = model('user', userSchema);
+userSchema
+    .virtual('friendCount')
+    // does this syntax below actually work???
+    .get(() => {
+        if (this.friends) {
+            return this.friends.length
+        }
+    })
+
+const User = model('user', userSchema)
 
 module.exports = User;
